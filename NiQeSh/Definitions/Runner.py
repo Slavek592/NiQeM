@@ -66,7 +66,11 @@ def read_line(line, args, results):
             return [args, []]
         args[2] = 1
     elif args[2] == 1:
-        tabs = num_of_tabs(line)
+        if line[0] in ["0", "1", "2", "3"]:
+            tabs = int(line[0])
+            line = line[1:]
+        else:
+            [line, tabs] = num_of_tabs(line)
         if tabs == -1:
             Errors.wrong_count_of_spaces_error(line, args[3])
             args[1] = False
@@ -75,26 +79,26 @@ def read_line(line, args, results):
             Errors.things_choosing_error(line, args[3])
             args[1] = False
             return [args, []]
-        line = remove_tabs(line, tabs)
         results[0] = line
         args[2] = 2
     else:
-        tabs = num_of_tabs(line)
+        if line[0] in ["0", "1", "2", "3"]:
+            tabs = int(line[0])
+            line = line[1:]
+        else:
+            [line, tabs] = num_of_tabs(line)
         if tabs == -1:
             Errors.wrong_count_of_spaces_error(line, args[3])
             args[1] = False
             return [args, []]
         elif tabs == 1:
-            line = remove_tabs(line, tabs)
             results[1].append(line)
             args[4] += 1
             results[2].append([])
             results[3].append([])
         elif tabs == 2:
-            line = remove_tabs(line, tabs)
             results[2][args[4]].append(line)
         elif tabs == 3:
-            line = remove_tabs(line, tabs)
             results[3][args[4]].append(line)
         elif line == "}":
             args[0] = True
@@ -113,14 +117,9 @@ def num_of_tabs(line):
         else:
             break
     if spaces % tab_length == 0:
-        return int(spaces / tab_length)
+        return [line[int(spaces / tab_length) * tab_length:], int(spaces / tab_length)]
     else:
-        return -1
-
-
-def remove_tabs(line, tabs):
-    tab_length = 2
-    return line[tabs * tab_length:]
+        return ["", -1]
 
 
 def rewrite_actions(actions):

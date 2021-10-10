@@ -1,0 +1,15 @@
+{
+1["apple", "axe"]
+1Tree
+2There is a tree
+3"axe"->+"wood"
+2There is a felled tree
+1River
+2There is a river
+3"wood"->>2
+2There is a river and a bridge
+1Goal
+2There is a hungry animal
+3"apple"->*
+2There is a friendly animal
+}
